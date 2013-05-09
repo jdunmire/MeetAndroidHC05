@@ -25,8 +25,8 @@
 #include "WConstants.h"
 #endif
 
-#include "HardwareSerial.h"
 #include "MeetAndroid.h"
+#include <HC05.h>
 
 extern "C" {
 #include <stdlib.h>
@@ -101,9 +101,9 @@ bool MeetAndroid::receive(){
 	boolean timeout = false;
 	while(!timeout)
 	{
-		while(Serial.available() > 0)
+		while(btSerial.available() > 0)
 		{
-			lastByte = Serial.read();
+			lastByte = btSerial.read();
 			
 			if(lastByte == abord){
 				flush();
@@ -119,9 +119,9 @@ bool MeetAndroid::receive(){
 			else return false;
 		}
 		
-		if(Serial.available() <= 0 && !timeout){
+		if(btSerial.available() <= 0 && !timeout){
 			if(waitTime > 0) delayMicroseconds(waitTime);
-			if(Serial.available() <= 0) timeout = true;
+			if(btSerial.available() <= 0) timeout = true;
 		}
 	}
 	return timeout;
@@ -266,66 +266,66 @@ double MeetAndroid::getDouble()
 
 #if defined(ARDUINO) && ARDUINO >= 100
 size_t MeetAndroid::write(uint8_t b){
-	return Serial.print(b);
+	return btSerial.print(b);
 }
 #else
 void MeetAndroid::write(uint8_t b){
-	Serial.print(b);
+	btSerial.print(b);
 }
 #endif
 	
 
 
 void MeetAndroid::send(char c ){
-	Serial.print(startFlag);
-	Serial.print(c);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(c);
+	btSerial.print(ack);
 }
 
 void MeetAndroid::send(const char str[]){
-	Serial.print(startFlag);
-	Serial.print(str);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(str);
+	btSerial.print(ack);
 }
 void MeetAndroid::send(uint8_t n){
-	Serial.print(startFlag);
-	Serial.print(n);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(n);
+	btSerial.print(ack);
 }
 void MeetAndroid::send(int n){
-	Serial.print(startFlag);
-	Serial.print(n);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(n);
+	btSerial.print(ack);
 }
 void MeetAndroid::send(unsigned int n){
-	Serial.print(startFlag);
-	Serial.print(n);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(n);
+	btSerial.print(ack);
 }
 void MeetAndroid::send(long n){
-	Serial.print(startFlag);
-	Serial.print(n);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(n);
+	btSerial.print(ack);
 }
 void MeetAndroid::send(unsigned long n){
-	Serial.print(startFlag);
-	Serial.print(n);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(n);
+	btSerial.print(ack);
 }
 void MeetAndroid::send(long n, int base){
-	Serial.print(startFlag);
-	Serial.print(n, base);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(n, base);
+	btSerial.print(ack);
 }
 void MeetAndroid::send(double n){
-	Serial.print(startFlag);
-	Serial.print(n);
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.print(n);
+	btSerial.print(ack);
 }
 void MeetAndroid::sendln(void){
-	Serial.print(startFlag);
-	Serial.println();
-	Serial.print(ack);
+	btSerial.print(startFlag);
+	btSerial.println();
+	btSerial.print(ack);
 }
 
 void MeetAndroid::flush(){
